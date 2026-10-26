@@ -1,0 +1,1094 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyFall Adventures | Vive la caída libre</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #ff5e1a;
+            --dark: #101820;
+            --light: #f5f7fa;
+            --gray: #6b7280;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--dark);
+            background: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* Navegación */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(16, 24, 32, 0.96);
+            color: white;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        nav a {
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .nav-button {
+            padding: 12px 18px;
+            background: var(--primary);
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            color: white;
+            font-size: 28px;
+        }
+
+        /* Portada */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 8% 80px;
+            color: white;
+            background:
+                linear-gradient(90deg, rgba(8, 17, 28, 0.92),
+                rgba(8, 17, 28, 0.25)),
+                url("https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=2000&q=85")
+                center/cover;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            animation: appear 1s ease;
+        }
+
+        .tag {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: 1.05;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #e0e4e8;
+            max-width: 570px;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 25px;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e84a09;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        /* Indicadores */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 650px;
+            margin-top: 55px;
+        }
+
+        .stat {
+            border-left: 3px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        .stat h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .stat p {
+            font-size: 13px;
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        /* Secciones generales */
+
+        section {
+            padding: 90px 8%;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 50px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(30px, 4vw, 42px);
+            margin-bottom: 15px;
+        }
+
+        .section-heading p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Experiencia */
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .experience-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .experience-card img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .card-content p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            color: var(--primary);
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .price small {
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        /* Banner */
+
+        .adventure {
+            background: var(--dark);
+            color: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .adventure img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .adventure h2 {
+            font-size: clamp(30px, 4vw, 43px);
+            margin-bottom: 20px;
+        }
+
+        .adventure p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .benefits {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .benefits li {
+            margin: 15px 0;
+        }
+
+        .benefits li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        /* Galería */
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.025);
+        }
+
+        /* Reservaciones */
+
+        .booking {
+            background: var(--light);
+        }
+
+        .booking-container {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 45px;
+            align-items: start;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .booking-info h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .booking-info p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .contact-item span {
+            color: var(--primary);
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        form {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+        }
+
+        form h3 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7dce2;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        form .btn {
+            width: 100%;
+        }
+
+        #message {
+            display: none;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            background: #dcfce7;
+            color: #166534;
+            line-height: 1.5;
+        }
+
+        /* Preguntas */
+
+        .faq {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: white;
+            text-align: left;
+            padding: 22px 0;
+            font-size: 17px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .faq-question span {
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 0 22px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Footer */
+
+        footer {
+            background: #0b1117;
+            color: white;
+            text-align: center;
+            padding: 35px 8%;
+        }
+
+        footer p {
+            color: #9ca3af;
+            font-size: 13px;
+            margin-top: 12px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Diseño adaptable */
+
+        @media (max-width: 900px) {
+            header {
+                padding: 18px 5%;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            section {
+                padding: 70px 5%;
+            }
+
+            .experience-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .adventure {
+                gap: 30px;
+            }
+
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                padding: 25px;
+                background: var(--dark);
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            nav a {
+                padding: 8px 0;
+            }
+
+            .hero {
+                padding: 130px 6% 60px;
+                background-position: 58% center;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 13px 16px;
+                font-size: 13px;
+            }
+
+            .stats {
+                gap: 12px;
+            }
+
+            .stat h3 {
+                font-size: 22px;
+            }
+
+            .stat p {
+                font-size: 11px;
+            }
+
+            .experience-grid,
+            .adventure,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .adventure img {
+                height: 300px;
+            }
+
+            .gallery-grid img {
+                height: 240px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            form {
+                padding: 23px;
+            }
+
+            .booking-info h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navegación -->
+    <header>
+        <a href="#inicio" class="logo">SKYFALL<span>.</span></a>
+
+        <button class="menu-toggle" id="menuToggle"
+                aria-label="Abrir menú" aria-expanded="false">
+            ☰
+        </button>
+
+        <nav id="navMenu">
+            <a href="#inicio">Inicio</a>
+            <a href="#experiencias">Experiencias</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#galeria">Galería</a>
+            <a href="#contacto" class="nav-button">Reservar salto</a>
+        </nav>
+    </header>
+
+    <!-- Portada principal -->
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <span class="tag">ATRÉVETE A VOLAR</span>
+
+                <h1>El cielo no es el límite.<br>
+                    <span>Es el comienzo.</span>
+                </h1>
+
+                <p>
+                    Descubre la emoción de saltar en paracaídas desde miles
+                    de metros de altura. Vive una experiencia inolvidable
+                    con instructores profesionales y vistas espectaculares.
+                </p>
+
+                <a href="#experiencias" class="btn btn-primary">
+                    Descubrir experiencias
+                </a>
+
+                <a href="#contacto" class="btn btn-outline">
+                    Reservar ahora
+                </a>
+
+                <div class="stats">
+                    <div class="stat">
+                        <h3>100%</h3>
+                        <p>Adrenalina</p>
+                    </div>
+                    <div class="stat">
+                        <h3>13,000</h3>
+                        <p>Pies de altura aprox.</p>
+                    </div>
+                    <div class="stat">
+                        <h3>∞</h3>
+                        <p>Emociones</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experiencias y precios -->
+        <section id="experiencias">
+            <div class="section-heading">
+                <span class="tag">ELIGE TU AVENTURA</span>
+                <h2>Una experiencia para recordar</h2>
+                <p>
+                    Tenemos diferentes opciones para que vivas la caída
+                    libre a tu manera. Elige el paquete que mejor se adapte
+                    a tu próxima aventura.
+                </p>
+            </div>
+
+            <div class="experience-grid">
+                <article class="experience-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80"
+                        alt="Paisaje natural desde las alturas">
+
+                    <div class="card-content">
+                        <h3>Salto Tándem</h3>
+                        <p>
+                            Ideal para principiantes. Salta junto a un
+                            instructor experimentado y disfruta cada segundo.
+                        </p>
+                        <div class="price">$3,500 <small>MXN por persona</small></div>
+                        <br>
+                        <button class="btn btn-primary choose-package"
+                                data-package="Salto Tándem">
+                            Elegir paquete
+                        </button>
+                    </div>
+                </article>
+
+                <article class="experience-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+                        alt="Vista panorámica de un paisaje">
+
+                    <div class="card-content">
+                        <h3>Salto con Video</h3>
+                        <p>
+                            Conserva el recuerdo de tu aventura con un
+                            video y fotografías de tu salto.
+                        </p>
+                        <div class="price">$4,500 <small>MXN por persona</small></div>
+                        <br>
+                        <button class="btn btn-primary choose-package"
+                                data-package="Salto con Video">
+                            Elegir paquete
+                        </button>
+                    </div>
+                </article>
+
+                <article class="experience-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80"
+                        alt="Montañas bajo un cielo espectacular">
+
+                    <div class="card-content">
+                        <h3>Experiencia VIP</h3>
+                        <p>
+                            Disfruta una atención personalizada y contenido
+                            audiovisual premium de tu aventura.
+                        </p>
+                        <div class="price">$5,500 <small>MXN por persona</small></div>
+                        <br>
+                        <button class="btn btn-primary choose-package"
+                                data-package="Experiencia VIP">
+                            Elegir paquete
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Información de la empresa -->
+        <section class="adventure" id="nosotros">
+            <div>
+                <span class="tag">SOBRE NOSOTROS</span>
+
+                <h2>Tu próxima gran historia comienza aquí.</h2>
+
+                <p>
+                    En SkyFall Adventures creemos que las mejores historias
+                    comienzan cuando te atreves a salir de tu zona de confort.
+                    Nuestro objetivo es ofrecer experiencias emocionantes,
+                    organizadas y responsables para cada aventurero.
+                </p>
+
+                <ul class="benefits">
+                    <li>Instructores debidamente capacitados.</li>
+                    <li>Equipo de paracaidismo revisado y mantenido.</li>
+                    <li>Sesión informativa antes de cada salto.</li>
+                    <li>Atención personalizada durante la experiencia.</li>
+                </ul>
+
+                <a href="#contacto" class="btn btn-primary">
+                    Vive la experiencia
+                </a>
+            </div>
+
+            <img
+                src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
+                alt="Paisaje natural desde una gran altura">
+        </section>
+
+        <!-- Galería de imágenes -->
+        <section id="galeria">
+            <div class="section-heading">
+                <span class="tag">MOMENTOS INOLVIDABLES</span>
+                <h2>La aventura te espera</h2>
+                <p>
+                    Imagina la vista, siente la emoción y prepárate para
+                    vivir una experiencia diferente.
+                </p>
+            </div>
+
+            <div class="gallery-grid">
+                <img
+                    src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=800&q=80"
+                    alt="Cielo y nubes">
+
+                <img
+                    src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+                    alt="Montañas vistas desde las alturas">
+
+                <img
+                    src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80"
+                    alt="Paisaje natural espectacular">
+            </div>
+        </section>
+
+        <!-- Formulario de reservación -->
+        <section class="booking" id="contacto">
+            <div class="section-heading">
+                <span class="tag">HAZLO REALIDAD</span>
+                <h2>Reserva tu próxima aventura</h2>
+                <p>
+                    Completa el formulario y prepara todo para vivir
+                    una experiencia llena de adrenalina.
+                </p>
+            </div>
+
+            <div class="booking-container">
+                <div class="booking-info">
+                    <h2>¿Listo para saltar?</h2>
+                    <p>
+                        Nuestro equipo puede orientarte sobre los paquetes,
+                        los requisitos y la disponibilidad de fechas.
+                    </p>
+
+                    <div class="contact-item">
+                        <span>UBICACIÓN</span>
+                        Centro de paracaidismo SkyFall
+                    </div>
+
+                    <div class="contact-item">
+                        <span>HORARIOS</span>
+                        Consulta disponibilidad de lunes a domingo
+                    </div>
+
+                    <div class="contact-item">
+                        <span>RESERVACIONES</span>
+                        Solicita información mediante el formulario
+                    </div>
+                </div>
+
+                <form id="bookingForm">
+                    <h3>Solicitar reservación</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" id="nombre" name="nombre"
+                                   placeholder="Tu nombre" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correo">Correo electrónico</label>
+                            <input type="email" id="correo" name="correo"
+                                   placeholder="tucorreo@ejemplo.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono"
+                                   placeholder="Tu número de contacto" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha">Fecha deseada</label>
+                            <input type="date" id="fecha" name="fecha" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paquete">Paquete de experiencia</label>
+                        <select id="paquete" name="paquete" required>
+                            <option value="">Selecciona un paquete</option>
+                            <option value="Salto Tándem">
+                                Salto Tándem - $3,500 MXN
+                            </option>
+                            <option value="Salto con Video">
+                                Salto con Video - $4,500 MXN
+                            </option>
+                            <option value="Experiencia VIP">
+                                Experiencia VIP - $5,500 MXN
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personas">Número de personas</label>
+                        <select id="personas" name="personas" required>
+                            <option value="1">1 persona</option>
+                            <option value="2">2 personas</option>
+                            <option value="3">3 personas</option>
+                            <option value="4">4 personas</option>
+                            <option value="5">5 personas</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Enviar solicitud
+                    </button>
+
+                    <div id="message" role="status"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Preguntas frecuentes -->
+        <section id="preguntas">
+            <div class="section-heading">
+                <span class="tag">RESOLVEMOS TUS DUDAS</span>
+                <h2>Preguntas frecuentes</h2>
+                <p>
+                    Conoce algunos detalles importantes antes de tu salto.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿Necesito experiencia previa?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        No necesariamente. El salto tándem está pensado
+                        para principiantes y se realiza junto a un instructor
+                        calificado, después de recibir las indicaciones
+                        correspondientes.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿Qué edad debo tener para saltar?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Los requisitos de edad, autorización y condiciones
+                        físicas dependen de la normativa aplicable y del
+                        operador. Consulta los requisitos antes de reservar.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿Qué pasa si hace mal tiempo?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Los saltos dependen de las condiciones meteorológicas.
+                        Si no son adecuadas, el operador puede reprogramar
+                        la actividad siguiendo sus políticas de reservación.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿Puedo llevar un recuerdo de mi salto?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Sí, puedes elegir un paquete que incluya fotografías
+                        y video, sujetos a disponibilidad y a las condiciones
+                        de seguridad del operador.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <a href="#inicio" class="logo">SKYFALL<span>.</span></a>
+
+        <p>
+            Atrévete a vivir algo extraordinario.<br>
+            © <span id="year"></span> SkyFall Adventures.
+            Sitio demostrativo de una empresa ficticia.
+        </p>
+
+        <div class="footer-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#experiencias">Experiencias</a>
+            <a href="#contacto">Reservaciones</a>
+            <a href="#preguntas">Preguntas frecuentes</a>
+        </div>
+    </footer>
+
+    <script>
+        // Menú adaptable para celulares
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        menuToggle.addEventListener("click", () => {
+            const abierto = navMenu.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", abierto);
+            menuToggle.textContent = abierto ? "✕" : "☰";
+        });
+
+        // Cerrar el menú al seleccionar una sección
+        document.querySelectorAll("#navMenu a").forEach(enlace => {
+            enlace.addEventListener("click", () => {
+                navMenu.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        // Seleccionar paquete y llevar al formulario
+        document.querySelectorAll(".choose-package").forEach(boton => {
+            boton.addEventListener("click", () => {
+                document.getElementById("paquete").value =
+                    boton.dataset.package;
+
+                document.getElementById("contacto").scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+        });
+
+        // Evitar seleccionar fechas anteriores al día actual
+        const fechaInput = document.getElementById("fecha");
+        const hoy = new Date();
+        const fechaLocal = new Date(
+            hoy.getTime() - hoy.getTimezoneOffset() * 60000
+        ).toISOString().split("T")[0];
+
+        fechaInput.min = fechaLocal;
+
+        // Formulario de demostración
+        document.getElementById("bookingForm").addEventListener(
+            "submit", function(event) {
+                event.preventDefault();
+
+                const nombre = document.getElementById("nombre").value;
+                const paquete = document.getElementById("paquete").value;
+                const personas = document.getElementById("personas").value;
+                const fecha = document.getElementById("fecha").value;
+
+                const mensaje = document.getElementById("message");
+
+                mensaje.innerHTML =
+                    "<strong>¡Gracias, " + escaparHTML(nombre) +
+                    "!</strong><br>" +
+                    "Tu solicitud de demostración se ha preparado para " +
+                    escaparHTML(paquete) + ", para " + personas +
+                    (personas === "1" ? " persona" : " personas") +
+                    ", el día " + escaparHTML(fecha) + ".<br>" +
+                    "Este formulario es una demostración: no se ha enviado " +
+                    "la solicitud ni se ha confirmado una reservación.";
+
+                mensaje.style.display = "block";
+                mensaje.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        );
+
+        // Evitar interpretar el nombre o los datos como código HTML
+        function escaparHTML(texto) {
+            return String(texto).replace(/[&<>"']/g, caracter => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[caracter]);
+        }
+
+        // Preguntas frecuentes desplegables
+        document.querySelectorAll(".faq-question").forEach(boton => {
+            boton.addEventListener("click", () => {
+                const item = boton.parentElement;
+                const activo = item.classList.toggle("active");
+                boton.querySelector("span").textContent = activo ? "−" : "+";
+            });
+        });
+
+        // Año actualizado automáticamente
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+
+</body>
+</html>
